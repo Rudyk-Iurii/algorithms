@@ -1,6 +1,6 @@
 from math import log
 import random
-import turtle
+# import turtle
 import time
 from collections import deque
 
@@ -271,6 +271,9 @@ def deykstra_algoritm(costs):
 
 
 deykstra_algoritm(costs)
+
+# def dynamic_prog():
+#     pass
 
 
 def calculate_route_deykstra_algoritm(parent_dict, a = "fin"):
