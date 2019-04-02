@@ -7,7 +7,7 @@ def talk_result(result):
 
 
 
-def find_best_combination(capacity: int, items: dict):
+def find_best_combination(capacity: int, dict: dict):
     """
     Getting the best combination of items with restricted bag capacity.
     Only integer weight
@@ -19,7 +19,8 @@ def find_best_combination(capacity: int, items: dict):
     for i in dict:
         item_list.append(i)
         item_parameters.append(dict[i])
-
+    # print(item_list)
+    # print(item_parameters)
 
     weight_row = []
     for i in range(1, capacity+1):
@@ -59,33 +60,38 @@ dict = {
 }
 
 table = find_best_combination(6, dict)
-for i in table:
-    print(i)
+# for i in table:
+#     print(i)
+# print(table)
+
+item_lists = ['water', 'book', 'food', 'camera', 'jacket']
+item_parameterss = [{'weight': 3, 'value': 10}, {'weight': 1, 'value': 3}, {'weight': 2, 'value': 9}, {'weight': 1, 'value': 6}, {'weight': 2, 'value': 5}]
 
 print()
 
 choice_list = []
 
-#### finish me
-# def best_choice(table, weight, weight_list):
-#     if weight < 1 or table == []:
-#         return
-#     else:
-#         print("weight", weight)
-#         result = table[-1][-1]
-#         print("выбираем из", table[len(table)-1])
-#         index = 1
-#         if result == table[len(table)-1][-1]:
-#             result = table[len(table)-1][-1]
-#             index = len(table)-2
-#             table.pop(-1)
-#             print("значит берем предмет с индексом", len(table))
-#             # print(choice)
-#         choice_list.append([index, result])
-#         for row in table:
-#             while len(row) > index:
-#                 row.pop(-1)
-#         best_choice(table, (weight-index))
-#
-# best_choice(table, 6)
-# print(choice_list)
+
+def best_choice(table: list, weight, item_lists, item_parameters: list):
+    if weight < 1:
+        return
+    else:
+        index = len(table)-1
+        while len(table)>1 and table[len(table)-1][-1] == table[len(table)-2][-1]:
+            index = len(table) - 2
+            table.pop(-1)
+
+
+            # print(choice)
+        choice_list.append([item_lists[index], "weight: {}".format(item_parameters[index]["weight"])])
+        for row in table:
+            while len(row) > weight-item_parameters[index]["weight"]:
+                # print("сокращаем длинну каждой строки")
+                row.pop(-1)
+        table.pop(-1)
+        best_choice(table, int(weight-item_parameters[index]["weight"]), item_lists,item_parameters)
+
+
+best_choice(table, 6, item_lists, item_parameterss)
+
+print(choice_list)
